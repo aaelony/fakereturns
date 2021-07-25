@@ -8,7 +8,7 @@ Authors@R:
            email = "first.last@example.com",
            comment = c(ORCID = "YOUR-ORCID-ID"))
 Description: Generate various fake data.
-Imports:
+Depends:
     data.table (>= 1.14.0),
     BatchGetSymbols (>= 2.6.1),
     truncnorm (>= 1.0.8)
