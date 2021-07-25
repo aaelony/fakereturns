@@ -1,0 +1,20 @@
+Package: fakereturns
+Title: An R package to generate fake stock portfolio data sets.
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "First",
+           family = "Last",
+           role = c("aut", "cre"),
+           email = "first.last@example.com",
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+Description: Generate various fake data.
+Imports:
+    data.table (>= 1.14.0),
+    BatchGetSymbols (>= 2.6.1),
+    truncnorm (>= 1.0.8)
+License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
+    license
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
