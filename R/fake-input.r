@@ -118,7 +118,7 @@ fake.some.portfolio.data <- function(start.date= '2010-01-01',
                       ))
     names(d2.bought) <-  c("ticker", "portfolio.status", "purchase.date", "purchase.price", "shares.bought",
                            "initial.investment.value",
-                           "price.open,at.purchase.date", "price.close.at.purchase.date", "price.low.at.purchase.date", "price.high.at.purchase.date", "volume.at.purchase.date",
+                           "price.open.at.purchase.date", "price.close.at.purchase.date", "price.low.at.purchase.date", "price.high.at.purchase.date", "volume.at.purchase.date",
                            "grp.tot", "ith.per.j")
 
 
