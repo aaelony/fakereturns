@@ -36,9 +36,9 @@ generate.fake.dates <- function(start.date= '2010-01-01',
 fake.some.portfolio.data <- function(start.date= '2010-01-01',
                                      end.date=Sys.Date(),
                                      n = 20,
-                                     tickers = c('AAPL', 'NFLX', 'BRK-B'),
+                                     tickers = c('AAPL', 'NFLX'),
                                      pct.bought = 0.5 ,
-                                     purchase.ceiling = 20000  ## ~ $20k at most for purchase
+                                     purchase.ceiling = 5000  ## ~ $5k at most for purchase
                                      ) {
 
     d <- data.table::data.table(
