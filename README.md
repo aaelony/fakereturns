@@ -1,6 +1,10 @@
 # fakereturns
 
-An R package to generate _fake but realistic_ data for various analytic purposes.
+A toy R package to generate _fake but realistic_ data for various analytic purposes.
+
+
+Very Alpha, not ready for use.
+
 
 
 ## Overview
