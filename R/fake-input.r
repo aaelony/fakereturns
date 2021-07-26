@@ -1,3 +1,5 @@
+suppressPackageStartupMessages(library("BatchGetSymbols"))
+suppressPackageStartupMessages(library("data.table"))
 
 
 #' Generate a list of random dates within a period of time.
