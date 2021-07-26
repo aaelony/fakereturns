@@ -95,7 +95,9 @@ fake.some.portfolio.data <- function(start.date= '2010-01-01',
     ## d2.bought[, max.shares.bought := purchase.ceiling / price.high]
 
     ## Assign the number of shares (arbitrarily based on how many fit into the purchase.ceiling)
-    d2.bought[, shares.bought := abs(floor(rpois(nrow(d2.bought), lambda= purchase.ceiling / price.high)))]
+    d2.bought[, shares.bought := abs(floor(truncnorm::rtruncnorm(nrow(d2.bought),
+                                                      a=1, b=purchase.ceiling / price.high,
+                                                      mean= purchase.ceiling / price.high / 2)))]
     
     ##d2.bought$shares.bought <- floor(
     ##    rnorm(
