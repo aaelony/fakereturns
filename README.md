@@ -26,7 +26,17 @@ Now we have a dataset to analyze.
 ```r
 library(fakereturns)
 
-d <- fake.some.portfolio.data(start.date= '2015-01-01', end.date=Sys.Date(), n = 40)
+d <- fake.some.portfolio.data(
+     start.date= '2015-01-01', 
+	 end.date=Sys.Date(), 
+	 n = 40,
+	 tickers = c("AAPL", "NFLX", "GOOG"),
+	 pct.bought = 0.5,
+	 purchase.ceiling = 5000
+	 
+	 )
+
+
 
 ```
 
@@ -42,3 +52,16 @@ if (!require("devtools")) {
 devtools::install_github("aaelony/fakereturns", dependencies = TRUE, build_vignettes = FALSE)
 ```
 
+
+## TODO
+
+ - [ ] offer ways (e.g. FIFO, LIFO) to match BOUGHT with SOLD
+ - [ ] compute IRR
+ - [ ] freq distribution of weekdays
+ 
+
+## Changelog
+
+### Version 0.0.4
+
+adding weekday to generated dates

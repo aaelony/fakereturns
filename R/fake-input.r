@@ -14,10 +14,13 @@ generate.fake.dates <- function(start.date= '2010-01-01',
                                 n.dates = 100
                                 ) {
 
-    sample(seq(as.Date(start.date),
+    x <- sample(seq(as.Date(start.date),
                as.Date(end.date),
                by="day"),
-           n.dates)
+               n.dates * 2  ## get 2x and then only keep the weekdays (which is hopefully enough).
+               )
+
+    x[ ! weekdays(x, abbreviate=TRUE) %in% c('Sat', 'Sun')][1:n.dates]
 
 }
 
@@ -56,9 +59,10 @@ fake.some.portfolio.data <- function(start.date= '2010-01-01',
     ## sort by ticker+date, assign the first (random percentage P) to be "bought"s and the remainder "sold"s.
     data.table::setorderv(d, c("ticker", "date"))
 
-    d.cnts.by.ticker <- d[, .N, by="ticker"]
-    d.cnts.by.ticker[, purch.labels := floor( N * pct.bought )]
+    ## d.cnts.by.ticker <- d[, .N, by="ticker"]
+    ## d.cnts.by.ticker[, purch.labels := floor( N * pct.bought )]
 
+    d[, day:= weekdays(date, abbreviate = T)]
     d[,  `:=`( grp.tot = .N , ith.per.j = 1:.N ) , by = "ticker" ]
     ## bought or sold ??
     d[, portfolio.status := ifelse( ith.per.j < floor(grp.tot * pct.bought), "BOUGHT", "SOLD")]
@@ -115,12 +119,12 @@ fake.some.portfolio.data <- function(start.date= '2010-01-01',
 
     data.table::setcolorder(
                     d2.bought,
-                    c("ticker", "portfolio.status", "date", "price.bought", "shares.bought",
+                    c("ticker", "portfolio.status", "date", "day", "price.bought", "shares.bought",
                       "initial.investment.value",
                       "price.open", "price.close", "price.low", "price.high", "volume",
                       "grp.tot", "ith.per.j"
                       ))
-    names(d2.bought) <-  c("ticker", "portfolio.status", "purchase.date", "purchase.price", "shares.bought",
+    names(d2.bought) <-  c("ticker", "portfolio.status", "purchase.date", "purchase.day", "purchase.price", "shares.bought",
                            "initial.investment.value",
                            "price.open.at.purchase.date", "price.close.at.purchase.date", "price.low.at.purchase.date", "price.high.at.purchase.date", "volume.at.purchase.date",
                            "grp.tot", "ith.per.j")
@@ -141,8 +145,8 @@ fake.some.portfolio.data <- function(start.date= '2010-01-01',
         fake.data = d2,         
         bought = d2.bought,
         sold = d2.sold,
-        ticker.hist = ticker.hist,
-        cnts.by.ticker = d.cnts.by.ticker
+        ticker.hist = ticker.hist ## ,
+        ## cnts.by.ticker = d.cnts.by.ticker
     )    
 
 
