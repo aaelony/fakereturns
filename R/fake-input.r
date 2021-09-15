@@ -56,7 +56,7 @@ generate.shares.sold.info <- function(bought.dataset,
     d1[, c("ticker", "purchase_date",  "purchase_day", "purchase_price", "shares_bought",  "initial_investment_value",
            "price_open_at_purchase_date", "price_close_at_purchase_date", "price_low_at_purchase_date", "price_high_at_purchase_date",
            "volume_at_purchase_date", "latest_price",
-           "latest_value",  "gain_or_loss", "fraction.of.shares.to.sell", "sold_date",  "shares_sold")]
+           "latest_value",  "gain_or_loss", "sold_date",  "shares_sold")]
 }
 
 
@@ -230,14 +230,11 @@ fake.some.portfolio.data <- function(start.date= '2010-01-01',
     d2.bought[, latest_value:= latest_price * shares_bought]
     d2.bought[, gain_or_loss:= latest_value - initial_investment_value]
 
-
     match_algo          <- "FIFO"
-
 
     d2.bought
     #' ticker, portfolio_status, purchase_date, purchase_day, purchase_price, shares_bought, initial_investment_value, price_open_at_purchase_date,
     #' price_close_at_purchase_date, price_low_at_purchase_date, price_high_at_purchase_date, volume_at_purchase_date, grp_tot, ith_per_j, latest_price, latest_value, gain_or_loss
-
 
 
     d3 <- generate.shares.sold.info(
