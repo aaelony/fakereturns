@@ -15,7 +15,7 @@ generate.fake.dates <- function(start.date= '2010-01-01',
                                 n.dates = 100
                                 ) {
 
-    x <- sample(seq(oas.Date(start.date),
+    x <- sample(seq(as.Date(start.date),
                as.Date(end.date),
                by="day"),
                n.dates * 2  ## get 2x and then only keep the weekdays (which is hopefully enough).
