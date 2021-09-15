@@ -62,6 +62,13 @@ devtools::install_github("aaelony/fakereturns", dependencies = TRUE, build_vigne
 
 ## Changelog
 
+### Version 0.0.5
+
+Breaking changes, now returns one `data.table`.
+
+ - [X] compute shares sold with dates occuring after the purchase
+
+
 ### Version 0.0.4
 
 adding weekday to generated dates
