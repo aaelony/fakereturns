@@ -1,5 +1,6 @@
 suppressPackageStartupMessages(library("BatchGetSymbols"))
 suppressPackageStartupMessages(library("data.table"))
+suppressPackageStartupMessages(library("dplyr"))
 
 
 #' Generate a list of random dates within a period of time.
@@ -51,12 +52,16 @@ generate.shares.sold.info <- function(bought.dataset,
         origin="1970-01-01")
         
     ## d1[, c("purchase_date", "sold_date")]
-    d1[, shares_sold := floor(fraction.of.shares.to.sell * shares_bought)]
+    d1[, shares_sold := floor( rnorm(1, mean=fraction.of.shares.to.sell, sd=0.4) * shares_bought)]
+    ## d1[, final_investment_value := shares_sold * sell_price ]
+    d1[, days_owned := sold_date - purchase_date]
+    d1[, tax_status := paste(ifelse(days_owned>365, "long-term", "short-term"), "loss or gain")]
+    ## d1[, gain_or_loss := initial_investment_value - 
 
     d1[, c("ticker", "purchase_date",  "purchase_day", "purchase_price", "shares_bought",  "initial_investment_value",
            "price_open_at_purchase_date", "price_close_at_purchase_date", "price_low_at_purchase_date", "price_high_at_purchase_date",
-           "volume_at_purchase_date", "latest_price",
-           "latest_value",  "gain_or_loss", "sold_date",  "shares_sold")]
+           "volume_at_purchase_date", "today_price",
+           "today_value",  "today_gain_or_loss", "sold_date",  "shares_sold")]
 }
 
 
@@ -225,21 +230,21 @@ fake.some.portfolio.data <- function(start.date= '2010-01-01',
         d2.bought,
         ticker.hist[ref.date==latest.date.available, c("ticker",  "price.close") ],
         by.x="ticker",  by.y="ticker", x.all=TRUE)
-    names(d2.bought)[length(names(d2.bought))] <- "latest_price"
+    names(d2.bought)[length(names(d2.bought))] <- "today_price"
 
-    d2.bought[, latest_value:= latest_price * shares_bought]
-    d2.bought[, gain_or_loss:= latest_value - initial_investment_value]
+    d2.bought[, today_value:= today_price * shares_bought]
+    d2.bought[, today_gain_or_loss:= today_value - initial_investment_value]
 
     match_algo          <- "FIFO"
 
     d2.bought
     #' ticker, portfolio_status, purchase_date, purchase_day, purchase_price, shares_bought, initial_investment_value, price_open_at_purchase_date,
-    #' price_close_at_purchase_date, price_low_at_purchase_date, price_high_at_purchase_date, volume_at_purchase_date, grp_tot, ith_per_j, latest_price, latest_value, gain_or_loss
+    #' price_close_at_purchase_date, price_low_at_purchase_date, price_high_at_purchase_date, volume_at_purchase_date, grp_tot, ith_per_j, today_price, today_value, today_gain_or_loss
 
 
     d3 <- generate.shares.sold.info(
         bought.dataset             = d2.bought,
-        fraction.of.shares.to.sell = 0.5,
+        fraction.of.shares.to.sell = (1 - pct.bought),
         sold.reservoir             = d2.sold
     )
 
